@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard | FoodBridge</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f7f2;
+            color: #26352b;
+        }
+
+        header {
+            background: #176b45;
+            color: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            background: #e5f5e9;
+            color: #176b45;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        main {
+            max-width: 1050px;
+            margin: 55px auto;
+            padding: 20px;
+        }
+
+        h1 { color: #176b45; }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 22px;
+            margin-top: 35px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px #00000010;
+        }
+
+        .card h2 { color: #176b45; }
+
+        .card p { color: #66736a; line-height: 1.6; }
+
+        .card a {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 12px 18px;
+            background: #176b45;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>FoodBridge | Donor</h2>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</header>
+
+<main>
+    <h1>Welcome, {{ session.get('full_name', 'Donor') }}!</h1>
+    <p>Share surplus food and help people in need.</p>
+
+    <div class="cards">
+        <div class="card">
+            <h2>Donate Food</h2>
+            <p>Add details about surplus food available for donation.</p>
+            <a href="{{ url_for('add_food') }}">Donate Now</a>
+        </div>
+
+        <div class="card">
+            <h2>My Food Listings</h2>
+            <p>View and track all your food donations.</p>
+            <a href="{{ url_for('my_listings') }}">View Listings</a>
+        </div>
+
+        <div class="card">
+            <h2>Food Requests</h2>
+            <p>View requests received from NGOs and respond to them.</p>
+            <a href="{{ url_for('food_requests') }}">View Requests</a>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

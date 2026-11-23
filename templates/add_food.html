@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donate Food | FoodBridge</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .donate-container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .donate-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .donate-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .donate-heading h1 {
+            color: #168b70;
+            margin-bottom: 8px;
+        }
+
+        .donate-heading p {
+            color: #777;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #344b45;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dce7e2;
+            border-radius: 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+            background: #fbfdfc;
+        }
+
+        .form-group textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #159b79, #36bd91);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: #168b70;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .flash-message {
+            padding: 12px;
+            background: #fff2e8;
+            color: #a34b18;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        @media(max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .donate-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="donate-container">
+
+    <a href="{{ url_for('donor_dashboard') }}" class="back-link">
+        ← Back to Dashboard
+    </a>
+
+    <div class="donate-card">
+
+        <div class="donate-heading">
+            <h1>🥗 Donate Food</h1>
+            <p>Share surplus food and help someone in need.</p>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('add_food') }}">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Food Name *</label>
+                    <input type="text"
+                           name="food_name"
+                           maxlength="150"
+                           placeholder="Example: Vegetable Rice"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Food Category *</label>
+                    <select name="category_id" required>
+                        <option value="">Select Category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.category_id }}">
+                                {{ category.category_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group full">
+                    <label>Description</label>
+                    <textarea name="description"
+                              placeholder="Describe the food, packaging and other details..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity *</label>
+                    <input type="number"
+                           name="quantity"
+                           min="0.01"
+                           step="0.01"
+                           placeholder="Example: 10"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Unit *</label>
+                    <select name="unit" required>
+                        <option value="">Select Unit</option>
+                        <option value="KG">Kilograms (KG)</option>
+                        <option value="LITRE">Litres</option>
+                        <option value="PACKETS">Packets</option>
+                        <option value="PLATES">Plates</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Prepared Date & Time</label>
+                    <input type="datetime-local" name="prepared_at">
+                </div>
+
+                <div class="form-group">
+                    <label>Expiry Date & Time *</label>
+                    <input type="datetime-local"
+                           name="expiry_at"
+                           required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Pickup Address *</label>
+                    <textarea name="pickup_address"
+                              maxlength="255"
+                              placeholder="Enter complete pickup address"
+                              required></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label>City *</label>
+                    <input type="text"
+                           name="city"
+                           maxlength="100"
+                           placeholder="Enter city"
+                           required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                ❤️ Submit Food Donation
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

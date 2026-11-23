@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard | FoodBridge</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f8f4;
+            color: #263b2d;
+        }
+
+        header {
+            background: #176b45;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero {
+            padding: 55px 7%;
+            color: white;
+            background: linear-gradient(120deg, #176b45, #65ad7b);
+        }
+
+        .hero h1 { font-size: 34px; }
+
+        .container { padding: 35px 7%; }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+            gap: 22px;
+            margin-top: 25px;
+        }
+
+        .card {
+            display: block;
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #263b2d;
+            box-shadow: 0 5px 18px #0000000d;
+            transition: .2s;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .icon { font-size: 42px; }
+
+        .card h2 { color: #176b45; }
+
+        .card p {
+            color: #65736a;
+            line-height: 1.6;
+        }
+
+        .tag {
+            color: #176b45;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>🌱 FoodBridge</h2>
+    <a href="{{ url_for('logout') }}">Logout ↗</a>
+</header>
+
+<section class="hero">
+    <h1>Welcome, {{ session.get('full_name', 'NGO') }}! 👋</h1>
+    <p>Find surplus food and help your community.</p>
+</section>
+
+<main class="container">
+
+    <h2>NGO Dashboard</h2>
+    <p>Choose a service to continue.</p>
+
+    <div class="cards">
+
+        <a href="{{ url_for('browse_food') }}" class="card">
+            <div class="icon">🍱</div>
+            <h2>Browse Available Food</h2>
+            <p>
+                Explore food donations from restaurants,
+                supermarkets and other donors.
+            </p>
+            <span class="tag">Explore Food →</span>
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>

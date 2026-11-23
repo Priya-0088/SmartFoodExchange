@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Food Exchange</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">
+        <span class="logo-icon">🥗</span>
+        <span>Food<span class="logo-green">Bridge</span></span>
+    </a>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#how">How It Works</a>
+        <a href="#impact">Our Impact</a>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+
+<a href="{{ url_for('register') }}" class="signup-btn">
+    Get Started ↗
+</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+        <div class="tagline">🌱 TOGETHER FOR A BETTER TOMORROW</div>
+
+        <h1>
+            Good Food.<br>
+            <span>Zero Waste.</span><br>
+            Better Future.
+        </h1>
+
+        <p class="hero-description">
+            Connecting food donors with NGOs to rescue surplus food,
+            reduce food waste and bring hope to communities in need.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{{ url_for('register') }}" class="primary-btn">
+    Donate Food ♡
+</a>
+
+<a href="{{ url_for('login') }}" class="secondary-btn">
+    Find Food →
+</a>
+        </div>
+
+        <div class="hero-note">
+            <span>🌍</span>
+            Every meal saved makes a difference.
+        </div>
+    </div>
+
+    <div class="hero-image">
+        <div class="image-background"></div>
+        <div class="food-emoji">🥗</div>
+
+        <div class="floating-card card-one">
+            <span>🥕</span>
+            <div>
+                <strong>Fresh Food</strong>
+                <small>Saved from waste</small>
+            </div>
+        </div>
+
+        <div class="floating-card card-two">
+            <span>💚</span>
+            <div>
+                <strong>Share More</strong>
+                <small>Care for everyone</small>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="impact" id="impact">
+
+    <div class="impact-heading">
+        <span>OUR PURPOSE</span>
+        <h2>Small Actions, <span>Big Impact</span></h2>
+        <p>Every contribution brings us closer to a world without food waste.</p>
+    </div>
+
+    <div class="impact-grid">
+
+        <div class="impact-card">
+            <div class="impact-icon orange">🍱</div>
+            <h3>Rescue Food</h3>
+            <p>Save surplus meals and fresh food before they go to waste.</p>
+        </div>
+
+        <div class="impact-card">
+            <div class="impact-icon green">🤝</div>
+            <h3>Connect People</h3>
+            <p>Bring food donors and NGOs together through one platform.</p>
+        </div>
+
+        <div class="impact-card">
+            <div class="impact-icon blue">🌍</div>
+            <h3>Protect Earth</h3>
+            <p>Reduce food waste and contribute to a sustainable future.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="how" id="how">
+    <div class="impact-heading">
+        <span>SIMPLE PROCESS</span>
+        <h2>How <span>FoodBridge</span> Works</h2>
+        <p>Three simple steps to make a meaningful difference.</p>
+    </div>
+
+    <div class="steps">
+        <div class="step">
+            <div>01</div>
+            <h3>Donate</h3>
+            <p>Food donors list their available surplus food.</p>
+        </div>
+        <div class="step">
+            <div>02</div>
+            <h3>Connect</h3>
+            <p>NGOs discover and request suitable food donations.</p>
+        </div>
+        <div class="step">
+            <div>03</div>
+            <h3>Collect</h3>
+            <p>Approved food is collected and shared with people in need.</p>
+        </div>
+    </div>
+</section>
+
+<footer id="about">
+    <div class="footer-logo">🥗 FoodBridge</div>
+    <p>Rescuing food. Sharing hope. Building a better tomorrow.</p>
+    <small>© 2026 FoodBridge | Smart Food Waste Exchange Platform</small>
+</footer>
+
+</body>
+</html>

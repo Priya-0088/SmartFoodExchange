@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Food Listings | FoodBridge</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .listings-container {
+            max-width: 1150px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .listings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .listings-header h1 {
+            color: #168b70;
+            margin-bottom: 5px;
+        }
+
+        .listings-header p {
+            color: #777;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #159b79, #36bd91);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+
+        .listing-card {
+            background: white;
+            border-radius: 17px;
+            padding: 22px;
+            box-shadow: 0 5px 22px rgba(0,0,0,0.07);
+            border: 1px solid #edf2ef;
+        }
+
+        .listing-card h3 {
+            color: #168b70;
+            margin-bottom: 10px;
+        }
+
+        .listing-card p {
+            color: #555;
+            margin: 9px 0;
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .AVAILABLE {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .RESERVED {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .COLLECTED {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .EXPIRED {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .CANCELLED {
+            background: #f3e8ff;
+            color: #7e22ce;
+        }
+
+        .empty-box {
+            background: white;
+            padding: 55px 20px;
+            border-radius: 17px;
+            text-align: center;
+            box-shadow: 0 5px 22px rgba(0,0,0,0.06);
+        }
+
+        .empty-box h2 {
+            color: #168b70;
+        }
+
+        .empty-box p {
+            color: #777;
+            margin: 12px 0 22px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #168b70;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .flash-message {
+            padding: 12px;
+            background: #fff2e8;
+            color: #a34b18;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        @media(max-width: 600px) {
+            .listings-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="listings-container">
+
+    <a href="{{ url_for('donor_dashboard') }}" class="back-link">
+        ← Back to Dashboard
+    </a>
+
+    <div class="listings-header">
+        <div>
+            <h1>🍱 My Food Listings</h1>
+            <p>Manage and track all your food donations.</p>
+        </div>
+
+        <a href="{{ url_for('add_food') }}" class="add-btn">
+            + Donate More Food
+        </a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if listings %}
+
+        <div class="listing-grid">
+
+            {% for item in listings %}
+
+                <div class="listing-card">
+
+                    <h3>🥗 {{ item.food_name }}</h3>
+
+                    <p>
+                        <strong>Listing ID:</strong>
+                        #{{ item.listing_id }}
+                    </p>
+
+                    <p>
+                        <strong>Category:</strong>
+                        {{ item.category_name }}
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ item.description or 'No description provided' }}
+                    </p>
+
+                    <p>
+                        <strong>Quantity:</strong>
+                        {{ item.quantity }} {{ item.unit }}
+                    </p>
+
+                    <p>
+                        <strong>Pickup Address:</strong>
+                        {{ item.pickup_address }}
+                    </p>
+
+                    <p>
+                        <strong>City:</strong>
+                        {{ item.city }}
+                    </p>
+
+                    <p>
+                        <strong>Expiry:</strong>
+                        {{ item.expiry_at.strftime('%d %b %Y, %I:%M %p') }}
+                    </p>
+
+                    <p>
+                        <strong>Added:</strong>
+                        {{ item.created_at.strftime('%d %b %Y, %I:%M %p') }}
+                    </p>
+
+                    <span class="status {{ item.status }}">
+                        {{ item.status }}
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-box">
+            <h2>🌱 No Food Donations Yet</h2>
+            <p>Your donated food listings will appear here.</p>
+
+            <a href="{{ url_for('add_food') }}" class="add-btn">
+                Donate Your First Food
+            </a>
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | FoodBridge</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'DM Sans', sans-serif;
+            background: #f5f8f5;
+            color: #26382d;
+        }
+
+        header {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #18764b;
+        }
+
+        .logo span {
+            color: #f2a84b;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: #176b45;
+            border: 1px solid #176b45;
+            padding: 10px 20px;
+            border-radius: 9px;
+            font-weight: 700;
+        }
+
+        .logout:hover {
+            background: #176b45;
+            color: white;
+        }
+
+        .hero {
+            padding: 55px 8%;
+            background: linear-gradient(120deg, #176b45, #35a66d);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            margin: 0 0 12px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: .92;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 45px auto;
+        }
+
+        .section-title {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: #78857b;
+            margin-bottom: 28px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+        .dashboard-card {
+            display: block;
+            background: white;
+            padding: 28px;
+            border-radius: 17px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #e8eee9;
+            box-shadow: 0 5px 20px rgba(0,0,0,.04);
+            transition: .25s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0,0,0,.09);
+        }
+
+        .card-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 29px;
+            background: #e4f5e9;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card h3 {
+            color: #176b45;
+            font-size: 19px;
+            margin: 0 0 10px;
+        }
+
+        .dashboard-card p {
+            color: #77847a;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .active-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #e3f5e9;
+            color: #21844c;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .ngo-notice {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #e8eee9;
+            line-height: 1.7;
+            color: #647469;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #89948c;
+            font-size: 13px;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                padding: 16px 5%;
+            }
+
+            .hero {
+                padding: 40px 6%;
+            }
+
+            .hero h1 {
+                font-size: 27px;
+            }
+
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Food<span>Bridge</span> 🌱</div>
+    <a href="{{ url_for('logout') }}" class="logout">Logout ↗</a>
+</header>
+
+<section class="hero">
+
+    {% if session.get('role') == 'DONOR' %}
+
+        <h1>Welcome, {{ session.get('full_name') }}! 👋</h1>
+        <p>
+            Your food can make a difference.
+            Share surplus food, connect with NGOs and help reduce food waste.
+        </p>
+
+    {% elif session.get('role') == 'NGO' %}
+
+        <h1>Welcome, {{ session.get('full_name') }}! 👋</h1>
+        <p>
+            Discover the FoodBridge platform and help connect surplus food
+            with people who need it.
+        </p>
+
+    {% endif %}
+
+</section>
+
+<main class="container">
+
+    {% if session.get('role') == 'DONOR' %}
+
+        <h2 class="section-title">Donor Dashboard</h2>
+        <p class="section-description">
+            Manage your donations and NGO requests from one place.
+        </p>
+
+        <div class="dashboard-grid">
+
+            <a href="{{ url_for('add_food') }}" class="dashboard-card">
+                <div class="card-icon">🍱</div>
+                <h3>Donate Food</h3>
+                <p>Add surplus food details and make it available to NGOs.</p>
+                <span class="active-tag">✓ Available Now</span>
+            </a>
+
+            <a href="{{ url_for('my_listings') }}" class="dashboard-card">
+                <div class="card-icon">📦</div>
+                <h3>My Food Listings</h3>
+                <p>View and manage all your donated food listings.</p>
+                <span class="active-tag">✓ Available Now</span>
+            </a>
+
+            <a href="{{ url_for('food_requests') }}" class="dashboard-card">
+                <div class="card-icon">📩</div>
+                <h3>Food Requests</h3>
+                <p>View NGO requests for your food donations and approve or reject them.</p>
+                <span class="active-tag">✓ Available Now</span>
+            </a>
+
+        </div>
+
+    {% elif session.get('role') == 'NGO' %}
+
+        <h2 class="section-title">NGO Dashboard</h2>
+        <p class="section-description">
+            Welcome to your NGO account.
+        </p>
+
+        <div class="ngo-notice">
+            <h2>🤝 Together, We Can Reduce Food Waste</h2>
+            <p>
+                Your NGO account is successfully registered.
+                The food discovery and food request features will be
+                connected here next.
+            </p>
+        </div>
+
+    {% else %}
+
+        <h2>Welcome to FoodBridge</h2>
+        <p>Please log in using a valid account.</p>
+
+    {% endif %}
+
+</main>
+
+<footer>
+    © 2026 FoodBridge | Connecting Surplus Food with Those in Need 🌱
+</footer>
+
+</body>
+</html>
